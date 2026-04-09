@@ -2,19 +2,55 @@ function blockNonNumericInput() {
   const ageField = document.getElementById("age");
   const contactField = document.getElementById("contact-number");
 
-  const preventNonNumeric = function (event) {
-    const invalidChars = ["e", "E", "+", "-", "."];
-    if (invalidChars.includes(event.key)) {
-      event.preventDefault();
+  const numericFields = [ageField, contactField].filter(Boolean);
+  const blockedKeys = ["e", "E", "+", "-", "."];
+
+  const isControlKey = function (event) {
+    return (
+      event.ctrlKey ||
+      event.metaKey ||
+      ["Backspace", "Delete", "ArrowLeft", "ArrowRight", "Home", "End", "Tab"].includes(event.key)
+    );
+  };
+
+  const sanitizeDigitsOnly = function (field) {
+    const cleanedValue = (field.value || "").replace(/\D+/g, "");
+    if (field.value !== cleanedValue) {
+      field.value = cleanedValue;
     }
   };
 
-  if (ageField) {
-    ageField.addEventListener("keypress", preventNonNumeric);
-  }
-  if (contactField) {
-    contactField.addEventListener("keypress", preventNonNumeric);
-  }
+  numericFields.forEach(function (field) {
+    field.setAttribute("inputmode", "numeric");
+    field.setAttribute("pattern", "[0-9]*");
+
+    field.addEventListener("keydown", function (event) {
+      if (isControlKey(event)) {
+        return;
+      }
+
+      if (blockedKeys.includes(event.key) || !/^\d$/.test(event.key)) {
+        event.preventDefault();
+      }
+    });
+
+    field.addEventListener("input", function () {
+      sanitizeDigitsOnly(field);
+    });
+
+    field.addEventListener("paste", function (event) {
+      event.preventDefault();
+      const pastedText = (event.clipboardData || window.clipboardData).getData("text");
+      const digitsOnly = (pastedText || "").replace(/\D+/g, "");
+
+      const selectionStart = field.selectionStart ?? field.value.length;
+      const selectionEnd = field.selectionEnd ?? field.value.length;
+      const before = field.value.slice(0, selectionStart);
+      const after = field.value.slice(selectionEnd);
+      field.value = before + digitsOnly + after;
+      sanitizeDigitsOnly(field);
+    });
+  });
 }
 
 function createFamilyRow() {
