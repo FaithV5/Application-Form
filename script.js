@@ -34,6 +34,9 @@ function createFamilyRow() {
       </select>
     </td>
     <td><input type="text" aria-label="Family occupation or income" /></td>
+    <td class="family-action-cell">
+      <button type="button" class="family-delete-btn" aria-label="Delete family row">X</button>
+    </td>
   `;
 
   return row;
@@ -49,6 +52,24 @@ function wireFamilyRowButton() {
 
   addRowButton.addEventListener("click", function () {
     familyBody.appendChild(createFamilyRow());
+  });
+
+  familyBody.addEventListener("click", function (event) {
+    const deleteButton = event.target.closest(".family-delete-btn");
+    if (!deleteButton) {
+      return;
+    }
+
+    const tableRow = deleteButton.closest("tr");
+    if (!tableRow) {
+      return;
+    }
+
+    if (familyBody.rows.length <= 1) {
+      return;
+    }
+
+    tableRow.remove();
   });
 }
 
