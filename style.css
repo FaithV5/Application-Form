@@ -303,6 +303,36 @@ td select {
   padding: 8px 10px;
 }
 
+.family-action-cell {
+  text-align: center;
+  vertical-align: middle;
+  width: 86px;
+}
+
+.family-delete-btn {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  min-height: 42px;
+  border: 2px solid #8e2222;
+  border-radius: 10px;
+  background: #fff5f5;
+  color: #8e2222;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.family-delete-btn:hover {
+  background: #ffe8e8;
+}
+
+.family-delete-btn:focus-visible {
+  outline: 3px solid color-mix(in srgb, #8e2222, white 62%);
+  outline-offset: 2px;
+}
+
 .table-controls {
   margin-top: 12px;
 }
