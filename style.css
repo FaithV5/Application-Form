@@ -76,10 +76,10 @@ body {
 
 .header-bottom {
   position: relative;
-  min-height: 80px;
+  min-height: 100px;
   display: flex;
   align-items: center;
-  padding: 10px 16px 10px 132px;
+  padding: 10px 16px 10px 136px;
   background: linear-gradient(120deg, #0d6e6e 0%, #0b8e7f 100%);
 }
 
@@ -89,22 +89,25 @@ body {
   top: 50%;
   transform: translateY(-50%);
   width: 96px;
-  height: 72px;
+  height: 96px;
+  padding: 6px;
   border: 2px solid rgba(255, 255, 255, 0.88);
   border-radius: 10px;
   background: #ffffff;
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 .logo-box img {
-  max-width: 100%;
-  max-height: 100%;
   width: auto;
   height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
   object-fit: contain;
+  object-position: center;
 }
 
 .title-bar {
@@ -559,13 +562,13 @@ td select {
   }
 
   .header-bottom {
-    min-height: 72px;
-    padding-left: 108px;
+    min-height: 88px;
+    padding-left: 112px;
   }
 
   .logo-box {
-    width: 82px;
-    height: 62px;
+    width: 86px;
+    height: 86px;
   }
 
   .section-block {
@@ -604,13 +607,13 @@ td select {
 
 @media (min-width: 960px) {
   .header-bottom {
-    min-height: 92px;
-    padding-left: 156px;
+    min-height: 116px;
+    padding-left: 162px;
   }
 
   .logo-box {
     width: 118px;
-    height: 88px;
+    height: 118px;
   }
 
   .row.three {
