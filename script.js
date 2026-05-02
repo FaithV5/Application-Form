@@ -290,6 +290,7 @@ function setupFaceCamera() {
 
     videoElement.srcObject = null;
     previewWrap.hidden = true;
+    previewWrap.setAttribute("aria-hidden", "true");
     openButton.setAttribute("aria-expanded", "false");
   };
 
@@ -317,8 +318,9 @@ function setupFaceCamera() {
 
       videoElement.srcObject = faceStream;
       previewWrap.hidden = false;
+      previewWrap.setAttribute("aria-hidden", "false");
       openButton.setAttribute("aria-expanded", "true");
-      setStatus("Camera opened successfully.");
+      closeButton.focus();
     } catch (error) {
       setStatus("Unable to access camera. Please allow permission, then try again.");
       if (fallbackInput) {
@@ -329,12 +331,38 @@ function setupFaceCamera() {
 
   closeButton.addEventListener("click", function () {
     stopCamera();
-    setStatus("Camera closed.");
   });
 
   window.addEventListener("beforeunload", function () {
     stopCamera();
   });
+
+  previewWrap.addEventListener("click", function (event) {
+    if (event.target === previewWrap) {
+      stopCamera();
+    }
+  });
+
+  window.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && !previewWrap.hidden) {
+      stopCamera();
+    }
+  });
+}
+
+function setupApplicationDate() {
+  const dateField = document.getElementById("date-application");
+
+  if (!dateField || dateField.value) {
+    return;
+  }
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  dateField.value = `${year}-${month}-${day}`;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -344,4 +372,5 @@ document.addEventListener("DOMContentLoaded", function () {
   setupSpecifyForSelects();
   setupUploadButtons();
   setupFaceCamera();
+  setupApplicationDate();
 });
