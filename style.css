@@ -185,11 +185,6 @@ small {
   line-height: 1.35;
 }
 
-#application-number + small {
-  color: var(--danger);
-  font-weight: 600;
-}
-
 input,
 select,
 textarea,
@@ -480,35 +475,63 @@ td select {
   font-family: inherit;
 }
 
-.camera-preview {
-  margin-top: 9px;
-  border: 2px solid #b7cbd9;
-  border-radius: var(--radius-sm);
-  background: #f2f7fb;
-  padding: 8px;
+.camera-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(5, 20, 28, 0.66);
+  backdrop-filter: blur(5px);
 }
 
-.camera-preview video {
+.camera-modal[hidden] {
+  display: none;
+}
+
+.camera-dialog {
+  width: min(100%, 760px);
+  max-height: min(88vh, 900px);
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(180, 204, 217, 0.55);
+  background: linear-gradient(180deg, #ffffff 0%, #eef5f9 100%);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+}
+
+.camera-dialog-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.camera-dialog-head h3 {
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(1.1rem, 1.9vw, 1.38rem);
+}
+
+.camera-dialog video {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 14px;
   background: #000;
   display: block;
 }
 
-.camera-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 8px;
-}
-
 .camera-btn {
   min-height: 44px;
+  white-space: nowrap;
 }
 
 .camera-status {
-  margin-top: 8px;
+  display: block;
+  margin-top: 6px;
   color: var(--muted);
   font-size: clamp(0.9rem, 1.1vw, 1rem);
 }
@@ -573,6 +596,15 @@ td select {
 
   .section-block {
     padding: 10px;
+  }
+
+  .camera-dialog {
+    padding: 12px;
+  }
+
+  .camera-dialog-head {
+    flex-direction: column;
+    align-items: stretch;
   }
 
   table {
